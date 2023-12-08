@@ -21,7 +21,7 @@ describe("Advertise", function () {
   describe("Deployment", function () {
     it("Should deploy", async function () {
       const { advertisableCoin, owner, alice, bob } = await loadFixture(deployFixture);
-      expect(advertisableCoin.address).to.be.not.null;
+      expect(await advertisableCoin.getAddress()).to.be.not.null;
     });
 
     // it("Should set the right owner", async function () {

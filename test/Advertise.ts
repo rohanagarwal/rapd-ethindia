@@ -13,7 +13,7 @@ describe("Advertise", function () {
     const [owner, alice, bob] = await ethers.getSigners();
 
     const Advertise = await ethers.getContractFactory("Advertise");
-    const advertise = await Advertise.deploy();
+    const advertise = await Advertise.deploy(5, 100, 7);
 
     return { advertise, owner, alice, bob };
   }
@@ -21,7 +21,7 @@ describe("Advertise", function () {
   describe("Deployment", function () {
     it("Should deploy", async function () {
       const { advertise, owner, alice, bob } = await loadFixture(deployFixture);
-      expect(advertise.address).to.be.not.null;
+      expect(await advertise.getAddress()).to.be.not.null;
     });
 
     // it("Should set the right owner", async function () {

@@ -81,4 +81,8 @@ contract Advertise {
         (bool success, ) = payable(referrer).call{value: amount}("");
         require(success, "Failed to send Ether");
     }
+
+    function getReferrerReward(address referrer) external view returns(uint256) {
+        return referrerRewards[referrer];
+    }
 } 

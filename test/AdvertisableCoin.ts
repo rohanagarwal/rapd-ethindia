@@ -14,6 +14,10 @@ describe("Advertise", function () {
 
     const AdvertisableCoin = await ethers.getContractFactory("AdvertisableCoin");
     const advertisableCoin = await AdvertisableCoin.deploy();
+    await owner.sendTransaction({
+      to: await advertisableCoin.getAddress(),
+      value: 10000000000000,
+    });
 
     return { advertisableCoin, owner, alice, bob };
   }
@@ -50,54 +54,58 @@ describe("Advertise", function () {
     // });
   });
 
-  // describe("Advertising features", function () {
-  //   describe("Rewards", function () {
-  //     it("Should revert with the right error if called too soon", async function () {
-  //       const { advertisableCoin: lock } = await loadFixture(deployFixture);
+  describe("Advertising features", function () {
+    describe("User Journey", function () {
+      it("Should be able to deploy advertizable contract, create referral, and claim rewards", async function () {
+        const { advertisableCoin, owner, alice, bob } = await loadFixture(deployFixture);
 
-  //       await expect(lock.withdraw()).to.be.revertedWith(
-  //         "You can't withdraw yet"
-  //       );
-  //     });
+        //transfer function initiated by bob to alice
+        await advertisableCoin["transfer(address,uint256,address)"](alice, 100, bob)
+        expect(await advertisableCoin.getReferrerReward(bob)).to.be.equal(5)
+        const currentBalance = await ethers.provider.getBalance(bob.address)
+        await advertisableCoin.claim(bob)
+        const updatedBalance = await ethers.provider.getBalance(bob.address)
+        expect(updatedBalance - currentBalance).to.be.equal(5)
+      });
 
-  //     it("Should revert with the right error if called from another account", async function () {
-  //       const { advertisableCoin: lock, unlockTime, otherAccount } = await loadFixture(
-  //         deployFixture
-  //       );
+    //   it("Should revert with the right error if called from another account", async function () {
+    //     const { advertisableCoin: lock, unlockTime, otherAccount } = await loadFixture(
+    //       deployFixture
+    //     );
 
-  //       // We can increase the time in Hardhat Network
-  //       await time.increaseTo(unlockTime);
+    //     // We can increase the time in Hardhat Network
+    //     await time.increaseTo(unlockTime);
 
-  //       // We use lock.connect() to send a transaction from another account
-  //       await expect(lock.connect(otherAccount).withdraw()).to.be.revertedWith(
-  //         "You aren't the owner"
-  //       );
-  //     });
+    //     // We use lock.connect() to send a transaction from another account
+    //     await expect(lock.connect(otherAccount).withdraw()).to.be.revertedWith(
+    //       "You aren't the owner"
+    //     );
+    //   });
 
-  //     it("Shouldn't fail if the unlockTime has arrived and the owner calls it", async function () {
-  //       const { advertisableCoin: lock, unlockTime } = await loadFixture(
-  //         deployFixture
-  //       );
+    //   it("Shouldn't fail if the unlockTime has arrived and the owner calls it", async function () {
+    //     const { advertisableCoin: lock, unlockTime } = await loadFixture(
+    //       deployFixture
+    //     );
 
-  //       // Transactions are sent using the first signer by default
-  //       await time.increaseTo(unlockTime);
+    //     // Transactions are sent using the first signer by default
+    //     await time.increaseTo(unlockTime);
 
-  //       await expect(lock.withdraw()).not.to.be.reverted;
-  //     });
-  //   });
+    //     await expect(lock.withdraw()).not.to.be.reverted;
+    //   });
+    // });
 
-  //   describe("Claims", function () {
-  //     it("Should emit an event on withdrawals", async function () {
-  //       const { advertisableCoin: lock, unlockTime, lockedAmount } = await loadFixture(
-  //         deployFixture
-  //       );
+    // describe("Claims", function () {
+    //   it("Should emit an event on withdrawals", async function () {
+    //     const { advertisableCoin: lock, unlockTime, lockedAmount } = await loadFixture(
+    //       deployFixture
+    //     );
 
-  //       await time.increaseTo(unlockTime);
+    //     await time.increaseTo(unlockTime);
 
-  //       await expect(lock.withdraw())
-  //         .to.emit(lock, "Withdrawal")
-  //         .withArgs(lockedAmount, anyValue); // We accept any value as `when` arg
-  //     });
-  //   });
-  // });
+    //     await expect(lock.withdraw())
+    //       .to.emit(lock, "Withdrawal")
+    //       .withArgs(lockedAmount, anyValue); // We accept any value as `when` arg
+    //   });
+    });
+  });
 });

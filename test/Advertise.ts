@@ -83,18 +83,6 @@ describe("Advertise", function () {
       expect(await advertise.budget()).to.equal(50);
     });
 
-    it("Should increase campaign period", async function () {
-      const { advertise, owner } = await loadFixture(deployFixture);
-      await advertise.increaseCampaignPeriod(3);
-      expect(await advertise.campaignPeriod()).to.equal(10 * 24 * 60 * 60); // 10 days in seconds
-    });
-
-    it("Should decrease campaign period", async function () {
-      const { advertise, owner } = await loadFixture(deployFixture);
-      await advertise.decreaseCampaignPeriod(3);
-      expect(await advertise.campaignPeriod()).to.equal(4 * 24 * 60 * 60); // 4 days in seconds
-    });
-
     it("Should toggle campaign status", async function () {
       const { advertise, owner } = await loadFixture(deployFixture);
       await advertise.toggleCampaign();

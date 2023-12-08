@@ -8,7 +8,7 @@ contract Advertise {
 
     constructor(uint _reward, uint _budget) {
         reward = _reward;
-        budget = budget;
+        budget = _budget;
     }
 
     modifier advertise(address referrer) {

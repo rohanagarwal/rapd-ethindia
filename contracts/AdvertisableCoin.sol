@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract AdvertisableCoin is ERC20, Advertise {
     Advertise ad;
 
-
     constructor() ERC20("AdvertisableCoin", "AC") {
         ad = new Advertise(5, 100);
     }

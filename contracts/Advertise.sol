@@ -17,6 +17,8 @@ contract Advertise {
     bool public status = true;
 
     event CampaignEvent (
+        address owner,
+        address contractAddress,
         uint256 reward,
         uint256 budget,
         uint256 startTimestamp,
@@ -33,7 +35,7 @@ contract Advertise {
         budget = _budget;
         startTimestamp = block.timestamp;
         campaignPeriod =  _campaignPeriod * 1 days;
-        emit CampaignEvent(reward, budget, startTimestamp, campaignPeriod);
+        emit CampaignEvent(msg.sender, address(this), reward, budget, startTimestamp, campaignPeriod);
     }
 
     function isCampaignActive() public view returns (bool) {

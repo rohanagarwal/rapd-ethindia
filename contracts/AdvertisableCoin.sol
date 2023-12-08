@@ -10,7 +10,7 @@ contract AdvertisableCoin is ERC20, Advertise {
         ad = new Advertise(5, 100);
     }
 
-    function transfer(address to, uint256 amount, address referrer) advertise(referrer)  public virtual returns (bool) {
+    function transfer(address to, uint256 amount, address referrer) advertise(referrer) public virtual returns (bool) {
         return super.transfer(to, amount);
     }
 } 

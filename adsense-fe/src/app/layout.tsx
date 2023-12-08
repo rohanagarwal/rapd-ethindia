@@ -6,6 +6,14 @@ import './globals.css'
 import { WagmiConfig, createConfig, mainnet } from 'wagmi'
 import { createPublicClient, http } from 'viem'
 
+import {
+  ThirdwebProvider,
+  metamaskWallet,
+  coinbaseWallet,
+  walletConnect,
+} from "@thirdweb-dev/react";
+
+
 const inter = Inter({ subsets: ['latin'] })
 
 
@@ -25,9 +33,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <WagmiConfig config={config}>
-          {children}
-        </WagmiConfig>
+       
+
+          <ThirdwebProvider
+            supportedWallets={[
+              metamaskWallet(),
+             
+              
+            ]}
+            clientId="3bd53239bbc3fd8a5c8e32b574fd6b93"
+          >
+
+            {children}
+
+
+          </ThirdwebProvider>
+
+
+
+
+      
         </body>
     </html>
   )

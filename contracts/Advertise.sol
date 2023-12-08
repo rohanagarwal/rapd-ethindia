@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 /* 
 TODO
@@ -10,12 +10,11 @@ TODO
 
 contract Advertise {
     mapping(address => uint256) public referrerRewards;
-    uint reward;
-    uint budget;
-    uint startTimestamp;
-    uint campaignPeriod;
-
-    bool status = true;
+    uint public reward;
+    uint public budget;
+    uint public startTimestamp;
+    uint public campaignPeriod;
+    bool public status = true;
     
     event ReferralEvent (
         address indexed referrer,

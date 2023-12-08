@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 import "./Advertise.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 

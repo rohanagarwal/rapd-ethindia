@@ -11,18 +11,62 @@ describe("Advertise", function () {
   async function deployFixture() {
     // Contracts are deployed using the first signer/account by default
     const [owner, alice, bob] = await ethers.getSigners();
+    const initialBudget = 100
+    const initialCampaignPeriod = 7 * 24 * 60 * 60 * 1000
 
     const Advertise = await ethers.getContractFactory("Advertise");
-    const advertise = await Advertise.deploy(5, 100, 7);
+    const advertise = await Advertise.deploy(5, initialBudget, initialCampaignPeriod);
 
-    return { advertise, owner, alice, bob };
+    return { advertise, owner, alice, bob, initialBudget, initialCampaignPeriod };
   }
 
   describe("Deployment", function () {
     it("Should deploy", async function () {
-      const { advertise, owner, alice, bob } = await loadFixture(deployFixture);
+      const { advertise, owner, alice, bob, initialBudget, initialCampaignPeriod } = await loadFixture(deployFixture);
       expect(await advertise.getAddress()).to.be.not.null;
     });
+
+    it("should increase budget", async function () {
+      const { advertise, owner, alice, bob, initialBudget, initialCampaignPeriod } = await loadFixture(deployFixture);
+      await advertise.increaseBudget(5)
+
+      expect(await advertise.budget()).to.be.equal(initialBudget + 5)
+    })
+
+    it("should decrease budget", async function () {
+      const { advertise, owner, alice, bob, initialBudget, initialCampaignPeriod } = await loadFixture(deployFixture);
+      await advertise.decreaseBudget(2)
+
+      expect(await advertise.budget()).to.be.equal(initialBudget - 2)
+    })
+
+    it("should increase campaign period", async function () {
+      const { advertise, owner, alice, bob, initialBudget, initialCampaignPeriod } = await loadFixture(deployFixture);
+      await advertise.increaseCampaignPeriod(1)
+
+      expect(await advertise.campaignPeriod()).to.be.equal(52254720086400)
+    })
+
+    it("should decrease campaign period", async function () {
+      const { advertise, owner, alice, bob, initialBudget, initialCampaignPeriod } = await loadFixture(deployFixture);
+      await advertise.decreaseCampaignPeriod(1)
+
+      expect(await advertise.campaignPeriod()).to.be.equal(52254719913600)
+    })
+
+    it("should toggle campaign", async function () {
+      const { advertise, owner, alice, bob, initialBudget, initialCampaignPeriod } = await loadFixture(deployFixture);
+      await advertise.toggleCampaign();
+
+      expect(await advertise.status()).to.be.equal(false)
+    })
+
+    it("should change default reward fee", async function () {
+      const { advertise, owner, alice, bob, initialBudget, initialCampaignPeriod } = await loadFixture(deployFixture);
+      await advertise.changeDefaultFee(20);
+
+      expect(await advertise.reward()).to.be.equal(20)
+    })
   });
 
 

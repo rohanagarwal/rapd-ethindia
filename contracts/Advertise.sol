@@ -15,6 +15,13 @@ contract Advertise {
     uint public startTimestamp;
     uint public campaignPeriod;
     bool public status = true;
+
+    event CampaignEvent (
+        uint256 reward,
+        uint256 budget,
+        uint256 startTimestamp,
+        uint256 campaignPeriod
+    );
     
     event ReferralEvent (
         address indexed referrer,
@@ -26,6 +33,7 @@ contract Advertise {
         budget = _budget;
         startTimestamp = block.timestamp;
         campaignPeriod =  _campaignPeriod * 1 days;
+        emit CampaignEvent(reward, budget, startTimestamp, campaignPeriod);
     }
 
     function isCampaignActive() public view returns (bool) {
@@ -62,7 +70,7 @@ contract Advertise {
             budget -= reward;
             emit ReferralEvent(referrer, reward);
         } 
-      _;
+        _;
     }
 
     function claim(address referrer) public {

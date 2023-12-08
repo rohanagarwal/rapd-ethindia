@@ -69,5 +69,6 @@ contract Advertise {
         uint amount = referrerRewards[referrer];
         referrerRewards[referrer] = 0;
         (bool success, ) = payable(referrer).call{value: amount}("");
+        require(success, "Failed to send Ether");
     }
 } 

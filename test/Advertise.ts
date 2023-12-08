@@ -23,32 +23,55 @@ describe("Advertise", function () {
       const { advertise, owner, alice, bob } = await loadFixture(deployFixture);
       expect(await advertise.getAddress()).to.be.not.null;
     });
-
-    // it("Should set the right owner", async function () {
-    //   const { advertisableCoin: lock, owner } = await loadFixture(deployFixture);
-
-    //   expect(await lock.owner()).to.equal(owner.address);
-    // });
-
-    // it("Should receive and store the funds to lock", async function () {
-    //   const { advertisableCoin: lock, lockedAmount } = await loadFixture(
-    //     deployFixture
-    //   );
-
-    //   expect(await ethers.provider.getBalance(lock.target)).to.equal(
-    //     lockedAmount
-    //   );
-    // });
-
-    // it("Should fail if the unlockTime is not in the future", async function () {
-    //   // We don't use the fixture here because we want a different deployment
-    //   const latestTime = await time.latest();
-    //   const Lock = await ethers.getContractFactory("Lock");
-    //   await expect(Lock.deploy(latestTime, { value: 1 })).to.be.revertedWith(
-    //     "Unlock time should be in the future"
-    //   );
-    // });
   });
+
+
+  describe("Campaign Management", function () {
+    it("Should increase budget", async function () {
+      const { advertise, owner } = await loadFixture(deployFixture);
+      await advertise.increaseBudget(50);
+      expect(await advertise.budget()).to.equal(150);
+    });
+
+    it("Should decrease budget", async function () {
+      const { advertise, owner } = await loadFixture(deployFixture);
+      await advertise.decreaseBudget(50);
+      expect(await advertise.budget()).to.equal(50);
+    });
+
+    it("Should increase campaign period", async function () {
+      const { advertise, owner } = await loadFixture(deployFixture);
+      await advertise.increaseCampaignPeriod(3);
+      expect(await advertise.campaignPeriod()).to.equal(10 * 24 * 60 * 60); // 10 days in seconds
+    });
+
+    it("Should decrease campaign period", async function () {
+      const { advertise, owner } = await loadFixture(deployFixture);
+      await advertise.decreaseCampaignPeriod(3);
+      expect(await advertise.campaignPeriod()).to.equal(4 * 24 * 60 * 60); // 4 days in seconds
+    });
+
+    it("Should toggle campaign status", async function () {
+      const { advertise, owner } = await loadFixture(deployFixture);
+      await advertise.toggleCampaign();
+      expect(await advertise.status()).to.equal(false);
+    });
+
+    it("Should change default fee", async function () {
+      const { advertise, owner } = await loadFixture(deployFixture);
+      await advertise.changeDefaultFee(10);
+      expect(await advertise.reward()).to.equal(10);
+    });
+  });
+
+  // describe("Referral System", function () {
+  //   it("Should reward referrer and deduct from budget", async function () {
+  //     const { advertise, alice, bob } = await loadFixture(deployFixture);
+  //     await advertise.connect(alice).claim(bob.address); // Assuming alice refers bob
+  //     expect(await advertise.referrerRewards(bob.address)).to.equal(5);
+  //     expect(await advertise.budget()).to.equal(95);
+  //   });
+  // });
 
   // describe("Advertising features", function () {
   //   describe("Rewards", function () {

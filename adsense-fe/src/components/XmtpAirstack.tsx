@@ -4,7 +4,7 @@ import { init } from "@airstack/airstack-react";
 import { useQuery } from "@airstack/airstack-react";
 import { useEthers } from '../app/hook/ethersProvider';
 import { Client } from "@xmtp/xmtp-js";
-import contractAbi from "../app/publisher/AdvertisableCoin.json"
+import contractAbi from "../app/admanager/AdvertisableCoin.json"
 import {ethers} from "ethers";
 import { useAddress } from '@thirdweb-dev/react';
 
@@ -44,7 +44,15 @@ query MyQuery($address: Identity!) {
 
 export default function XmtpAirstack() {
   const { data, loading, error } = useQuery(GET_VITALIK_LENS_FARCASTER_ENS, {"address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"}, { cache: false });
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+  const contractAddress = process.env.NEXT_PUBLIC_DEMO_CONTRACT_ADDRESS
+  const referrer = process.env.NEXT_PUBLIC_DEMO_REFERRER_ADDRESS
+  if (!contractAddress) {
+    throw new Error('Missing contract address')
+  }
+  if (!referrer) {
+    throw new Error('Missing referrer address')
+  }
+
   const signer = useEthers()
 
   async function sendMessage(message: string) {

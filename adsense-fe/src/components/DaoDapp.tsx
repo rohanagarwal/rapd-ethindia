@@ -130,11 +130,6 @@ export default function DaoDapp() {
           </div>
         </div>
       </div>
-
-      
-
-
-
     </>
   );
 }

@@ -12,6 +12,7 @@ import {
   coinbaseWallet,
   walletConnect,
 } from "@thirdweb-dev/react";
+import { EthersProvider } from './hook/ethersProvider'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -43,10 +44,11 @@ export default function RootLayout({
             ]}
             clientId="3bd53239bbc3fd8a5c8e32b574fd6b93"
           >
+            <EthersProvider>
 
             {children}
 
-
+            </EthersProvider>
           </ThirdwebProvider>
 
 

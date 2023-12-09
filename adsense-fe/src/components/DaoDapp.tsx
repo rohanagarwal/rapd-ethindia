@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useEthers } from "../app/hook/ethersProvider";
 import contractAbi from "../app/admanager/AdvertisableCoin.json";
+import daoAbi from "../app/admanager/AdvertisableDao.json";
 import { ethers } from "ethers";
 import { useAddress } from "@thirdweb-dev/react";
 import Link from "next/link";
@@ -10,14 +11,14 @@ import { useRouter } from 'next/navigation'
 
 export default function DaoDapp() {
 
-  const [transationDone, setTrsnsactionDone] = useState(false);
+  const [transactionDone, setTransactionDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter()
 
 
 
   useEffect(() => {
-    if (transationDone) {
+    if (transactionDone) {
 
       setLoading(true);
 
@@ -31,16 +32,20 @@ export default function DaoDapp() {
       return () => clearTimeout(timeoutId);
 
     }
-  }, [transationDone]);
+  }, [router, transactionDone]);
 
 
   const contractAddress = process.env.NEXT_PUBLIC_DEMO_CONTRACT_ADDRESS;
+  const daoContractAddress = process.env.NEXT_PUBLIC_DEMO_DAO_ADDRESS;
   const referrer = process.env.NEXT_PUBLIC_DEMO_REFERRER_ADDRESS;
   if (!contractAddress) {
     throw new Error("Missing contract address");
   }
   if (!referrer) {
     throw new Error("Missing referrer address");
+  }
+  if(!daoContractAddress) {
+    throw new Error("Missing dao address");
   }
 
   const signer = useEthers();
@@ -51,20 +56,34 @@ export default function DaoDapp() {
     signer
   );
 
+  const daoContract = new ethers.Contract(
+    daoContractAddress,
+    daoAbi.abi,
+    signer,
+  )
+
   async function checkNewToken(to?: string) {
     if (!to) {
       return;
     }
     try {
-      const tx = await contract["transfer(address,uint256,address)"](
+      const tx = await contract.transfer(
         to,
         1,
         referrer
       );
-      setTrsnsactionDone(true);
+      setTransactionDone(true);
       console.log(`transferred new token: ${tx.hash}`);
     } catch (e) {
       console.log("e: ", e);
+    }
+  }
+
+  async function checkNewDao() {
+    try {
+      const tx = await daoContract.joinDao(referrer)
+    } catch(e) {
+      console.log("e: ", e)
     }
   }
 
@@ -107,7 +126,7 @@ export default function DaoDapp() {
               </button>
 
               <button
-                onClick={() => checkNewToken(signerAddress)}
+                onClick={() => checkNewDao()}
                 className="bg-indigo-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
               >
                 Join AlphaX DAO

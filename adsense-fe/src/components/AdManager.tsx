@@ -5,6 +5,7 @@ import { useEthers } from "../app/hook/ethersProvider";
 import contractAbi from "../app/admanager/AdvertisableCoin.json";
 
 import { ethers } from "ethers";
+import Analytics from "@/app/analytics";
 
 type Props = {};
 
@@ -191,8 +192,8 @@ export default function AdManager() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-3/6 mt-36">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="bg-white shadow-lg rounded-lg p-6 w-3/6 mt-40">
         <div className="flex">
           <h1 className="flex-1 text-2xl font-bold mb-4 text-slate-500">
             Ad Manager
@@ -340,8 +341,15 @@ export default function AdManager() {
           {/* <p className='text-black'>{isCampaignActive.toString()} currently</p> */}
 
           {/* </div> */}
+         
         </div>
+       
       </div>
+
+      <h1 className="text-xl text-slate-800 mt-12 mb-4">Analytics</h1>
+
+      <Analytics/>
+     
     </div>
   );
 }

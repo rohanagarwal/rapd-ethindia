@@ -26,7 +26,10 @@ export default function DaoDapp() {
     fetchReferrerReward()
   }, [contract])
 
-  async function checkNewToken(to: string) {
+  async function checkNewToken(to?: string) {
+    if (!to) {
+      return
+    }
     let referral = referrerReward
     try {
       const tx = await contract["transfer(address,uint256,address)"](to, 1, referrer)

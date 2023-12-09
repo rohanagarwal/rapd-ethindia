@@ -2,6 +2,8 @@
 import React from 'react'
 import { init } from "@airstack/airstack-react";
 import { useQuery } from "@airstack/airstack-react";
+import { useEthers } from '../app/hook/ethersProvider';
+import { Client } from "@xmtp/xmtp-js";
 
 init("1bbb7ff8739434ceba402c6e565fac0f4");
 
@@ -35,11 +37,30 @@ query MyQuery($address: Identity!) {
 `;
 
 
+
+
 export default function XmtpAirstack() {
+  const signer = useEthers()
   const { data, loading, error } = useQuery(GET_VITALIK_LENS_FARCASTER_ENS, {"address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"}, { cache: false });
 
-  console.log("data", data)
-  
+  async function sendMessage(message: string) {
+    const xmtp = await Client.create(signer, { env: "dev" });
+    const conversation = await xmtp.conversations.newConversation(
+        "0x3F11b27F323b62B159D2642964fa27C46C841897",
+    )
+    const messages = await conversation.messages();
+    // print existing messages
+    messages.forEach((message) => {
+        console.log(message);
+    })
+    await conversation.send(message);
+    const messagesNow = await conversation.messages();
+    // print existing messages
+    messagesNow.forEach((message) => {
+        console.log(message);
+    })
+  }
+
   return (
     <>
         Showing information for vitalik.eth
@@ -59,6 +80,7 @@ export default function XmtpAirstack() {
             </p>
         </div>
         )}
+        <button onClick={() => sendMessage("GM")}>Button to send GM message</button>
     </>
   )
 }

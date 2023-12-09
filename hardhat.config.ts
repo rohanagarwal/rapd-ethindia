@@ -20,7 +20,12 @@ const config: HardhatUserConfig = {
         path: "m/44'/52752'/0'/0"
       },
       chainId: 42220
-    }
+    },
+    scrollTestnet: {
+      url: process.env.SCROLL_TESTNET_URL || "",
+      accounts:
+        process.env.SCROLL_PRIVATE_KEY !== undefined ? [process.env.SCROLL_PRIVATE_KEY] : [],
+    },
   },
   etherscan: {
     apiKey: {

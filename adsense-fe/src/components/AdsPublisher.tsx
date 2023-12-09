@@ -8,7 +8,7 @@ import { ethers } from "ethers";
 
 type Props = {}
 
-const contractAddress = "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512"
+const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 
 export default function AdsPublisher() {
   const address = useAddress();
@@ -38,7 +38,7 @@ export default function AdsPublisher() {
       setStartDate(startDate)
     }
     getInitialState()
-  }, [])
+  }, [contract])
 
   async function increaseBudget(amount: number) {
     try {

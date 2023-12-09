@@ -9,10 +9,6 @@ export default function App() {
 
   return (
    <div>
-     <ConnectWallet
-        theme={"dark"}
-        modalSize={"wide"}
-      />
    </div>
   );
 }

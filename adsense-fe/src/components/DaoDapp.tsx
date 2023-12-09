@@ -24,7 +24,7 @@ export default function DaoDapp() {
       const delay = 3000;
       const timeoutId = setTimeout(() => {
         setLoading(false);
-        router.push('/admanager');
+        router.push('/daopage');
       }, delay);
 
       // Clean up the timeout to prevent memory leaks

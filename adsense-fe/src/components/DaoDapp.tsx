@@ -10,11 +10,18 @@ import { useAddress } from '@thirdweb-dev/react';
 
 
 export default function DaoDapp() {
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+  const contractAddress = process.env.NEXT_PUBLIC_DEMO_CONTRACT_ADDRESS
+  const referrer = process.env.NEXT_PUBLIC_DEMO_REFERRER_ADDRESS
+  if (!contractAddress) {
+    throw new Error('Missing contract address')
+  }
+  if (!referrer) {
+    throw new Error('Missing referrer address')
+  }
+
   const signer = useEthers()
   const signerAddress = useAddress()
   const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer)
-  const referrer = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
   const [referrerReward, setReferrerReward] = useState(0)
 
   useEffect(() => {

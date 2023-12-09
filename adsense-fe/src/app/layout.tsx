@@ -11,6 +11,7 @@ import {
   metamaskWallet,
   coinbaseWallet,
   walletConnect,
+  safeWallet,
 } from "@thirdweb-dev/react";
 import { EthersProvider } from './hook/ethersProvider'
 import { ethers } from "ethers";
@@ -46,6 +47,8 @@ export default function RootLayout({
           <ThirdwebProvider
             supportedWallets={[
               metamaskWallet(),
+              coinbaseWallet(),
+              safeWallet()
             ]}
             clientId="3bd53239bbc3fd8a5c8e32b574fd6b93"
           >

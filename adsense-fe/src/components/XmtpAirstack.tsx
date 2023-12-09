@@ -4,14 +4,12 @@ import { init } from "@airstack/airstack-react";
 import { useQuery } from "@airstack/airstack-react";
 import { useEthers } from "../app/hook/ethersProvider";
 import { Client } from "@xmtp/xmtp-js";
-import { useAddress } from "@thirdweb-dev/react";
-import {
-  CHECK_ADDRESS_XMTP_ENABLED,
-  GET_NFT_HOLDERS_XMTP_ENABLED,
-  GET_SOCIAL_USERS_XMTP_ENABLED,
-} from "@/sdk/airstack";
-import { Send } from "lucide-react";
 import { Copy } from "lucide-react";
+import { useAddress } from '@thirdweb-dev/react';
+import { CHECK_ADDRESS_XMTP_ENABLED, GET_NFT_HOLDERS_XMTP_ENABLED, GET_SOCIAL_USERS_XMTP_ENABLED } from '@/sdk/airstack';
+import { Send } from 'lucide-react';
+import { PushAPI, CONSTANTS } from "@pushprotocol/restapi";
+
 init("1bbb7ff8739434ceba402c6e565fac0f4");
 
 // XMTP2 will invite XTMP1 to join the DAO
@@ -76,6 +74,13 @@ export default function XmtpAirstack() {
       recipientAddress
     );
     await conversation.send(message);
+
+    const pushProc = await PushAPI.initialize(signer, { env: CONSTANTS.ENV.PROD });
+    await pushProc.chat.send(recipientAddress, {
+      type: "Text",
+      content: message,
+    });
+
   }
 
   return (

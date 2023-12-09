@@ -2,15 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import { init } from "@airstack/airstack-react";
 import { useQuery } from "@airstack/airstack-react";
-<<<<<<< Updated upstream
 import { useEthers } from '../app/hook/ethersProvider';
 import { Client } from "@xmtp/xmtp-js";
-=======
 import contractAbi from "../app/publisher/AdvertisableCoin.json"
 import {ethers} from "ethers";
-import { useEthers } from '@/app/hook/ethersProvider';
 import { useAddress } from '@thirdweb-dev/react';
->>>>>>> Stashed changes
 
 init("1bbb7ff8739434ceba402c6e565fac0f4");
 

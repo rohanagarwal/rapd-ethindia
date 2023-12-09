@@ -12,8 +12,8 @@ const contractAddress = "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512"
 
 export default function AdsPublisher() {
   const address = useAddress();
-  const provider = useEthers()
-  const contract = new ethers.Contract(contractAddress, contractAbi.abi, provider)
+  const signer = useEthers()
+  const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer)
 
   const [budget, setBudget] = useState(0)
   const [reward, setReward] = useState(0)
@@ -21,17 +21,15 @@ export default function AdsPublisher() {
   const [startTimestamp, setStartTimestamp] = useState(0)
   const [startDate, setStartDate] = useState(new Date())
 
-
+  // Load initial state from contract
   useEffect(() => {
-    async function getBudget() {
+    async function getInitialState() {
       const budget = await contract.budget()
       const reward = await contract.reward()
       const campaignPeriod = await contract.campaignPeriod() // in seconds
       const campaignPeriodInDays = campaignPeriod / 60 / 60 / 24
       const startTimestamp = (await contract.startTimestamp()).toNumber() * 1000 // in milliseconds
-      console.log("startTimestamp = ", startTimestamp)
       const startDate = new Date(startTimestamp)
-      console.log("startDate = ", startDate)
 
       setBudget(budget)
       setReward(reward)
@@ -39,15 +37,18 @@ export default function AdsPublisher() {
       setStartTimestamp(startTimestamp)
       setStartDate(startDate)
     }
-    getBudget()
+    getInitialState()
   }, [])
 
-  function increaseBudget() {
-    contract?.increaseBudget(10).then(
-      (res: any) => {
-        console.log("increaseBudget res = ", res);
-      }
-    )
+  async function increaseBudget(amount: number) {
+    try {
+    await contract.increaseBudget(amount)
+    } catch (e) {
+      console.log("e", e)
+    }
+    const newBudget = await contract.budget()
+    console.log("newBudget", newBudget.toString())
+    setBudget(newBudget)
   }
 
   return (
@@ -62,6 +63,8 @@ export default function AdsPublisher() {
       <br />
       startDate is {startDate.toString()}
       <br />
+      <br />
+      <button onClick={() => increaseBudget(100)}>Increase Budget</button>
     </div>
   )
 }

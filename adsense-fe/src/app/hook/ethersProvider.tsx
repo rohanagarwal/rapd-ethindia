@@ -21,7 +21,7 @@ export const EthersProvider: React.FC<Props> = ({ children }) => {
         async function initializeEthers() {
             try {
                 const ethersInstance =new ethers.providers.Web3Provider(window.ethereum);
-                setEthersInstance(ethersInstance)
+                setEthersInstance(ethersInstance.getSigner())
                 setIsLoading(false)
             } catch(error) {
                 console.log(error)

@@ -2,7 +2,7 @@
 import { useAddress } from '@thirdweb-dev/react'
 import React, { useEffect, useState } from 'react'
 import { useEthers } from '../app/hook/ethersProvider';
-import contractAbi from "../app/publisher/AdvertisableCoin.json"
+import contractAbi from "../app/admanager/AdvertisableCoin.json"
 
 import { ethers } from "ethers";
 
@@ -10,7 +10,7 @@ type Props = {}
 
 const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 
-export default function AdsPublisher() {
+export default function AdManager() {
   const address = useAddress();
   const signer = useEthers()
   const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer)

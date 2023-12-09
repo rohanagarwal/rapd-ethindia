@@ -36,7 +36,7 @@ const XMTP2 = "0x203EEca028C99f48F2De4F070AbF245beB58CA4D"
 export default function XmtpAirstack() {
   const signer = useEthers()
   const address = useAddress()
-  const [addressToInvite, setAddressToInvite] = useState('');
+  const [addressToInvite, setAddressToInvite] = useState(XMTP1);
 
   // Social followers query
   const { data: data1, loading: loading1, error: error1 } = useQuery(GET_SOCIAL_USERS_XMTP_ENABLED, {"address": address ?? XMTP2}, { cache: false });
@@ -164,13 +164,13 @@ export default function XmtpAirstack() {
       }
       <br/>
       <br/>
-      <input type="text" placeholder="Address to invite" onChange={e => setAddressToInvite(e.target.value)} />
+      <input type="text" placeholder={XMTP1} color={"#000000"} onChange={e => setAddressToInvite(e.target.value)} />
       {data ? (
         <div>
             <p>
               {data.XMTPs?.XMTP[0].isXMTPEnabled ? (
                 <p>
-                  {addressToInvite} has XMTP enabled! Invite them by clicking the button below.
+                  {addressToInvite} has XMTP enabled!
                   <br/>
                   <button onClick={() => sendMessage(`You should also consider joining this DAO! Click here to join: localhost:3000/dapp?referrer=${address ?? XMTP2}`, addressToInvite)}>Invite friend to join DAO!</button>
                 </p>

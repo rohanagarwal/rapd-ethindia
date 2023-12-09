@@ -1,0 +1,24 @@
+query CampaignQuery {
+  campaignEvents(first: 5) {
+    id
+    owner
+    contractAddress
+    reward
+    blockNumber
+    blockTimestamp
+    budget
+    campaignPeriod
+  }
+}
+
+query ReferralQuery {
+  referralEvents(first: 5) {
+    id
+    referrer
+    contractAddress
+    reward
+    blockNumber
+    blockTimestamp
+    transactionHash
+  }
+}

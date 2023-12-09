@@ -1,4 +1,4 @@
-import DaoDapp from '@/components/DaoDapp';
+import XmtpAirstack from '@/components/XmtpAirstack';
 
 type Props = {}
 
@@ -6,7 +6,7 @@ export default function Dapp(props: Props) {
 
   return (
     <div>
-      <DaoDapp />
+      <XmtpAirstack />
     </div>
   )
 }

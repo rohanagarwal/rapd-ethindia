@@ -27,6 +27,7 @@ contract Advertise {
     
     event ReferralEvent (
         address indexed referrer,
+        address indexed contractAddress,
         uint256 reward
     );
 
@@ -70,7 +71,7 @@ contract Advertise {
         if (isCampaignActive()) {
             referrerRewards[referrer] += reward;
             budget -= reward;
-            emit ReferralEvent(referrer, reward);
+            emit ReferralEvent(referrer, address(this), reward);
         } 
         _;
     }

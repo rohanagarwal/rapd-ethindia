@@ -13,9 +13,31 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.SEPOLIA_PRIVATE_KEY !== undefined ? [process.env.SEPOLIA_PRIVATE_KEY] : [],
     },
+    celo: {
+      url: "https://forno.celo.org",
+      accounts: {
+        mnemonic: process.env.MNEMONIC,
+        path: "m/44'/52752'/0'/0"
+      },
+      chainId: 42220
+    }
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      mainnet: process.env.ETHERSCAN_API_KEY ?? "",
+      sepolia: process.env.ETHERSCAN_API_KEY ?? "",
+      celo: process.env.CELOSCAN_API_KEY ?? ""
+    },
+    customChains: [
+      {
+          network: "celo",
+          chainId: 42220,
+          urls: {
+              apiURL: "https://api.celoscan.io/api",
+              browserURL: "https://celoscan.io/",
+          },
+      },
+  ]
   },
 };
 

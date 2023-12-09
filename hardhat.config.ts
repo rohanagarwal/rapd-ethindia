@@ -31,6 +31,11 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.ARB_GOERLI_PRIVATE_KEY !== undefined ? [process.env.ARB_GOERLI_PRIVATE_KEY] : [],
     },
+    polygon: {
+      url: process.env.POLYGON_URL || "",
+      accounts:
+        process.env.POLYGON_PRIVATE_KEY !== undefined ? [process.env.POLYGON_PRIVATE_KEY] : [],
+    }
   },
   etherscan: {
     apiKey: {

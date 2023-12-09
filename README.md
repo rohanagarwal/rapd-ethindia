@@ -32,3 +32,7 @@ Here are the contract addresses - first is AdvertisableCoin, second is Advertisa
 Arbitrum Goerli:
 AdvertisableCoin: 0xb5979226D0b74c0302baC790f2fD51c2c93a3D88
 AdvertisableDao: 0xEdd580249b57305a2A1Cd92886eEe0a154e03E89
+
+Polygon:
+AdvertisableCoin: 0x14c49767731ef95502e498C6445E22eBb102dF9A
+AdvertisableDao: 0xd803DA64d415904Ba1DBC78c7764DDcA9Ccd7564

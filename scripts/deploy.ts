@@ -8,6 +8,11 @@ async function main() {
   const advertisableCoinDeploy = await advertisableCoin.deploy();
   await advertisableCoinDeploy.waitForDeployment();
   console.log("advertisableCoinDeploy deployed to:", await advertisableCoinDeploy.getAddress());
+
+  const advertisableDao = await ethers.getContractFactory("AdvertisableDao");
+  const advertisableDaoDeploy = await advertisableDao.deploy();
+  await advertisableDaoDeploy.waitForDeployment();
+  console.log("advertisableDaoDeploy deployed to:", await advertisableDaoDeploy.getAddress());
 }
 
 // We recommend this pattern to be able to use async/await everywhere

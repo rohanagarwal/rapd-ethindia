@@ -1,4 +1,3 @@
-import React from 'react'
 import XmtpAirstack from '@/components/XmtpAirstack';
 
 type Props = {}

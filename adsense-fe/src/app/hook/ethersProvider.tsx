@@ -30,7 +30,7 @@ export const EthersProvider: React.FC<Props> = ({ children }) => {
         }
 
         initializeEthers()
-    }, [ethersInstance])
+    }, [])
 
     if (isLoading) {
         return <div>Loading...</div>

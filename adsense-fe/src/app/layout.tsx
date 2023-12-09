@@ -13,6 +13,7 @@ import {
   walletConnect,
 } from "@thirdweb-dev/react";
 import { EthersProvider } from './hook/ethersProvider'
+import { ethers } from "ethers";
 
 
 const inter = Inter({ subsets: ['latin'] })

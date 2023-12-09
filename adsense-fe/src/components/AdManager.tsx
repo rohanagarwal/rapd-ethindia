@@ -214,7 +214,7 @@ export default function AdManager() {
   return (
   
     <div className="flex items-center justify-center min-h-screen">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-3/6">
+      <div className="bg-white shadow-lg rounded-lg p-6 w-3/6 mt-36">
         <h1 className="text-2xl font-bold mb-4 text-slate-500">Ad Manager</h1>
 
 
@@ -294,7 +294,7 @@ export default function AdManager() {
             />
             <button  
               onClick={handleChangeBudget} 
-              className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+              className="bg-slate-500 text-white p-2 rounded hover:bg-slate-600">
               Change Budget By
             </button>
             <p>change budget value = {budget}</p>
@@ -312,7 +312,7 @@ export default function AdManager() {
             />
             <button  
               onClick={handleChangeReward} 
-              className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+              className="bg-slate-500 text-white p-2 rounded hover:bg-slate-600">
               Change Reward To
             </button>
            
@@ -328,14 +328,14 @@ export default function AdManager() {
             />
             <button  
               onClick={handleChangeCampaignPeriod} 
-              className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+              className="bg-slate-500 text-white p-2 rounded hover:bg-slate-600">
               Change Campaign Period By
             </button>
           </div>
           <div className="col-span-1">
             <button  
               onClick={toggleCampaignActive} 
-              className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+              className="bg-slate-500 text-white p-2 rounded hover:bg-slate-600">
               Toggle Campaign
             </button> 
             {isCampaignActive ? <p className='text-black'>Active currently</p> : <p>Inactive currently</p>}

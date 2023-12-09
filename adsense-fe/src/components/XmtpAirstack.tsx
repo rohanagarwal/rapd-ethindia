@@ -39,8 +39,9 @@ query MyQuery($address: Identity!) {
   }
 `;
 
-
-
+const builtInRecipientAddress = "0x3F11b27F323b62B159D2642964fa27C46C841897"
+const XMTP1 = "0xe825A0c62Cd0c88D43F522bD17E91f4ADD3E9ff9"
+const XMTP2 = "0x203EEca028C99f48F2De4F070AbF245beB58CA4D"
 
 export default function XmtpAirstack() {
   const { data, loading, error } = useQuery(GET_VITALIK_LENS_FARCASTER_ENS, {"address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"}, { cache: false });
@@ -55,29 +56,19 @@ export default function XmtpAirstack() {
 
   const signer = useEthers()
 
-  async function sendMessage(message: string) {
-    const xmtp = await Client.create(signer, { env: "dev" });
+  async function sendMessage(message: string, recipientAddress: string) {
+    const xmtp = await Client.create(signer, { env: "production" });
     const conversation = await xmtp.conversations.newConversation(
-        "0x3F11b27F323b62B159D2642964fa27C46C841897",
+      recipientAddress,
     )
-    const messages = await conversation.messages();
-    // print existing messages
-    messages.forEach((message) => {
-        console.log(message);
-    })
     await conversation.send(message);
-    const messagesNow = await conversation.messages();
-    // print existing messages
-    messagesNow.forEach((message) => {
-        console.log(message);
-    })
   }
 
-  console.log("data", data)
+  // console.log("data", data)
   
   return (
     <>
-        Showing information for vitalik.eth
+        {/* Showing information for vitalik.eth
        {data ? (
         <div>
             <p>
@@ -93,8 +84,8 @@ export default function XmtpAirstack() {
                 {error ? error.message : ""}
             </p>
         </div>
-        )}
-        <button onClick={() => sendMessage("GM")}>Button to send GM message</button>
+        )} */}
+        <button onClick={() => sendMessage("You should also consider joining this DAO! Click here to join: localhost:3000/dapp?referrer=0x203EEca028C99f48F2De4F070AbF245beB58CA4D", XMTP1)}>Invite friend to join DAO!</button>
     </>
   )
 }

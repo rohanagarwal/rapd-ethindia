@@ -26,6 +26,11 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.SCROLL_PRIVATE_KEY !== undefined ? [process.env.SCROLL_PRIVATE_KEY] : [],
     },
+    arbitrumGoerli: {
+      url: process.env.ARBITRUM_GOERLI_URL || "",
+      accounts:
+        process.env.ARB_GOERLI_PRIVATE_KEY !== undefined ? [process.env.ARB_GOERLI_PRIVATE_KEY] : [],
+    },
   },
   etherscan: {
     apiKey: {

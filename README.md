@@ -28,3 +28,7 @@ Note to the Scroll team: We tried verification with Scrollscan but continued to 
 Here are the contract addresses - first is AdvertisableCoin, second is AdvertisableDao
 0xb5979226D0b74c0302baC790f2fD51c2c93a3D88
 0xEdd580249b57305a2A1Cd92886eEe0a154e03E89
+
+Arbitrum Goerli:
+AdvertisableCoin: 0xb5979226D0b74c0302baC790f2fD51c2c93a3D88
+AdvertisableDao: 0xEdd580249b57305a2A1Cd92886eEe0a154e03E89

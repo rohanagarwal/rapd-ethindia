@@ -43,7 +43,6 @@ query MyQuery($address: Identity!) {
 
 
 export default function XmtpAirstack() {
-  const signer = useEthers()
   const { data, loading, error } = useQuery(GET_VITALIK_LENS_FARCASTER_ENS, {"address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"}, { cache: false });
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
   const signer = useEthers()
@@ -81,27 +80,33 @@ export default function XmtpAirstack() {
     fetchReferrerReward()
   }, [contract])
 
-  function checkNewToken(to: string) {
-    contract["transfer(address,uint256,address)"](to, 1, referrer).then((tx: any) => {
+  async function checkNewToken(to: string) {
+    let referral = referrerReward
+    try {
+      const tx = await contract["transfer(address,uint256,address)"](to, 1, referrer)
       console.log(`transferred new token: ${tx.hash}`)
-      contract.getReferrerReward(referrer).then((reward: any) => {
-        setReferrerReward(parseInt(reward))
-      })
-    })
+      
+    } catch(e) {
+      console.log("e: ", e)
+    }
+    let ref = await contract.getReferrerReward(referrer)
+    referral = parseInt(ref)
+    setReferrerReward(referral)
   }
 
   async function claimReward(referrer: string) {
+    try {
       let tx = {
         to: contractAddress,
         value: ethers.utils.parseEther('2')
       };
-      signer.sendTransaction(tx).then(() => {
-        contract.claim(referrer).then(() => {
-          contract.getReferrerReward(referrer).then((reward: any) => {
-            setReferrerReward(parseInt(reward))
-          })
-        })
-      })
+      await signer.sendTransaction(tx)
+    } catch(e) {
+      console.log("e: ", e)
+    }
+
+    const reward = await contract.claim(referrer)
+    setReferrerReward(parseInt(reward))
   }
   
   return (

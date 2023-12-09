@@ -4,8 +4,36 @@ import { useEthers } from "../app/hook/ethersProvider";
 import contractAbi from "../app/admanager/AdvertisableCoin.json";
 import { ethers } from "ethers";
 import { useAddress } from "@thirdweb-dev/react";
+import Link from "next/link";
+import { useRouter } from 'next/navigation'
+
 
 export default function DaoDapp() {
+
+  const [transationDone, setTrsnsactionDone] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter()
+
+
+
+  useEffect(() => {
+    if (transationDone) {
+
+      setLoading(true);
+
+      const delay = 3000;
+      const timeoutId = setTimeout(() => {
+        setLoading(false);
+        router.push('/admanager');
+      }, delay);
+
+      // Clean up the timeout to prevent memory leaks
+      return () => clearTimeout(timeoutId);
+
+    }
+  }, [transationDone]);
+
+
   const contractAddress = process.env.NEXT_PUBLIC_DEMO_CONTRACT_ADDRESS;
   const referrer = process.env.NEXT_PUBLIC_DEMO_REFERRER_ADDRESS;
   if (!contractAddress) {
@@ -33,6 +61,7 @@ export default function DaoDapp() {
         1,
         referrer
       );
+      setTrsnsactionDone(true);
       console.log(`transferred new token: ${tx.hash}`);
     } catch (e) {
       console.log("e: ", e);
@@ -91,22 +120,21 @@ export default function DaoDapp() {
 
             </div>
 
+            {/* Loader */}
+            {loading && (
+              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 text-white">
+                Loading...
+              </div>
+            )}
+
           </div>
         </div>
       </div>
 
-      {/* <div className="flex items-center justify-center min-h-screen">
-        <div className="bg-white shadow-lg rounded-lg p-6 w-3/6 mt-36">
-          <h1 className="text-2xl font-bold mb-4 text-slate-500">Dapp</h1>
-        </div>
-      </div> */}
+      
 
-      {/* <div>
-          Heyy checkout the new token launched:
-        </div>
-        <button onClick={() => checkNewToken(signerAddress)}>
-          Check token
-        </button> */}
+
+
     </>
   );
 }

@@ -18,6 +18,7 @@ import Navbar from '@/components/Navbar'
 
 
 const inter = Inter({ subsets: ['latin'] })
+import { useRouter } from 'next/router';
 
 
 const config = createConfig({
@@ -33,28 +34,28 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+  // const router = useRouter();
+  // const isDaoRoute = router.asPath === '/daopage';
+
+
   return (
     <html lang="en">
       <body className={inter.className}>
        
-
           <ThirdwebProvider
             supportedWallets={[
               metamaskWallet(),
-             
-              
             ]}
             clientId="3bd53239bbc3fd8a5c8e32b574fd6b93"
           >
             <EthersProvider>
-            <Navbar/>
+            {/* {!isDaoRoute && <Navbar />} */}
+            <Navbar />
             {children}
 
             </EthersProvider>
           </ThirdwebProvider>
-
-
-
 
       
         </body>

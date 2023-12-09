@@ -12,55 +12,41 @@ interface QueryResponse {
 }
 
 interface Data {
-  Wallet: Wallet;
+  XMTPs: XMTP;
 }
 
 interface Error {
   message: string;
 }
 
-interface Wallet {
-  socials: Social[];
-  addresses: string[];
-}
+interface XMTP {
+  isXmtpEnabled: boolean
+}[]
 
-interface Social {
-  dappName: "lens" | "farcaster";
-  profileName: string;
-}
 
 const GET_VITALIK_LENS_FARCASTER_ENS = `
-query MyQuery {
-  Wallet(input: {identity: "vitalik.eth", blockchain: ethereum}) {
-    socials {
-      dappName
-      profileName
+query MyQuery($address: Identity!) {
+    XMTPs(input: { blockchain: ALL, filter: { owner: { _eq: $address } } }) {
+      XMTP {
+        isXMTPEnabled
+      }
     }
-    addresses
   }
-}
 `;
 
 
 export default function XmtpAirstack() {
-  const { data, loading, error }: QueryResponse = useQuery(GET_VITALIK_LENS_FARCASTER_ENS, {}, { cache: false });
+  const { data, loading, error } = useQuery(GET_VITALIK_LENS_FARCASTER_ENS, {"address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"}, { cache: false });
 
+  console.log("data", data)
+  
   return (
     <>
         Showing information for vitalik.eth
        {data ? (
         <div>
             <p>
-                {data.Wallet.socials.map((social, i) => (
-                    <div key={i}>
-                        <p>
-                            Dapp name: {social.dappName}
-                        </p>
-                        <p>
-                            Profile name: {social.profileName}
-                        </p>
-                    </div>
-                ))}
+                Is XMTP Enabled: {JSON.stringify(data.XMTPs.XMTP[0].isXMTPEnabled)}
             </p>
         </div>
         ) : (

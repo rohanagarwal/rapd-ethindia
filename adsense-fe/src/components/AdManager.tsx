@@ -142,19 +142,6 @@ export default function AdManager() {
     }
   };
 
-  // const handleToggleCampaignActivity = async () => {
-  //   try {
-  //     const amount = parseInt(changeCampaignPeriodVal);
-  //     if (isNaN(amount)) {
-  //       throw new Error('Please enter a valid number for the budget.');
-  //     }
-  //     if(amount > 0){
-  //       await increaseCampaignPeriod(amount);
-  //     } 
-  //   } catch (error) {
-  //   }
-  // };
-
   const changeReward = async (amount: any) => {
     try {
       await contract.changeDefaultFee(amount);

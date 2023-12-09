@@ -8,16 +8,16 @@ import { ethers } from "ethers";
 
 type Props = {};
 
-const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+
 
 export default function AdManager() {
   const address = useAddress();
-  const signer = useEthers();
-  const contract = new ethers.Contract(
-    contractAddress,
-    contractAbi.abi,
-    signer
-  );
+  const contractAddress = process.env.NEXT_PUBLIC_DEMO_CONTRACT_ADDRESS
+  if (!contractAddress) {
+    throw new Error('Missing contract address')
+  }
+  const signer = useEthers()
+  const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer)
 
   const [budget, setBudget] = useState("");
   const [reward, setReward] = useState("");
@@ -46,8 +46,9 @@ export default function AdManager() {
       setStartTimestamp(startTimestamp);
       setStartDate(startDate);
     }
-    getInitialState();
-  }, [contract]);
+    getInitialState()
+  })
+
 
   const checkIsCampaignActive = async () => {
     try {

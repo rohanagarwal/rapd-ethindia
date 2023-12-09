@@ -1,0 +1,9 @@
+# .graphclientrc.yml
+sources:
+  - name: prajjawal/ad-protocol
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/prajjawalk/ad-protocol
+
+documents:
+  - ./.graphql

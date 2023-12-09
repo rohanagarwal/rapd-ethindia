@@ -41,9 +41,9 @@ query MyQuery {
 }
 `;
 
+
 export default function XmtpAirstack() {
   const { data, loading, error }: QueryResponse = useQuery(GET_VITALIK_LENS_FARCASTER_ENS, {}, { cache: false });
-  console.log("data", JSON.stringify(data))
 
   return (
     <>
@@ -66,7 +66,7 @@ export default function XmtpAirstack() {
         ) : (
         <div>
             <p>
-                {loading ? "Loading..." : "Error"}
+                {loading ? "Loading info for vitalik.eth..." : "Error"}
             </p>
             <p>
                 {error ? error.message : ""}

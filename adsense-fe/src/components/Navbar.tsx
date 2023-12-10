@@ -1,4 +1,5 @@
 import { ConnectWallet } from "@thirdweb-dev/react";
+import { Github } from 'lucide-react';
 
 const Navbar = () => {
   return (
@@ -11,10 +12,10 @@ const Navbar = () => {
       <div className="bg-[conic-gradient(var(--tw-gradient-stops))] from-gray-600 via-gray-400 to-gray-200 p-4 rounded-lg fixed w-[60%] top-0 left-1/2 transform -translate-x-1/2">
         <nav className="flex items-center justify-between">
           <div className="text-gray-600 text-xl font-bold flex">
-            <ConnectWallet theme={"dark"} modalSize={"wide"} />
+            <ConnectWallet theme={"dark"} modalSize={"compact"} />
           </div>
           <div className="flex space-x-4">
-            <a href="/" className="text-white">
+            {/* <a href="/" className="text-white">
               Home
             </a>
             <a href="/about" className="text-white">
@@ -22,9 +23,9 @@ const Navbar = () => {
             </a>
             <a href="/tech" className="text-white">
               Tech
-            </a>
-            <a href="/contact" className="text-white">
-              Contact
+            </a> */}
+            <a href="https://github.com/rohanagarwal/rapd-ethindia" className="text-black rounded-full border border-black p-1">
+              <Github />
             </a>
           </div>
         </nav>

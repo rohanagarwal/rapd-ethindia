@@ -67,7 +67,7 @@ export default function DaoDapp() {
       return;
     }
     try {
-      const tx = await contract.transfer(
+      const tx = await contract["transfer(address,uint256,address)"](
         to,
         1,
         referrer

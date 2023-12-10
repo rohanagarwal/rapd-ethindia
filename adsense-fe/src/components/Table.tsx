@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-/* eslint-disable */
-import React, { useState } from 'react';
-
-// eslint-disable-next-line
-const Table = ({ data }: {data: any}) => {
-  const [sortedData, setSortedData] = useState(data);
-  const [sortOrder, setSortOrder] = useState('asc');
-
-  // eslint-disable-next-line
-  const handleSort = (key: any) => {
-=======
 // import React, { useState } from 'react';
 
 // const Table = ({ data }) => {
@@ -94,7 +82,6 @@ const Table: React.FC<TableProps> = ({ data }) => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const handleSort = (key: keyof typeof sortedData[0]) => {
->>>>>>> 8e3c42c (fixed deployment issues and home page built)
     const order = sortOrder === 'asc' ? 'desc' : 'asc';
     const sorted = [...sortedData].sort((a, b) => {
       // Type assertion to indicate that a[key] and b[key] are numbers

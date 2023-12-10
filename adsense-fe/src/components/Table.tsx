@@ -2,12 +2,12 @@
 import React, { useState } from 'react';
 
 // eslint-disable-next-line
-const Table = ({ data }) => {
+const Table = ({ data }: {data: any}) => {
   const [sortedData, setSortedData] = useState(data);
   const [sortOrder, setSortOrder] = useState('asc');
 
   // eslint-disable-next-line
-  const handleSort = (key) => {
+  const handleSort = (key: any) => {
     const order = sortOrder === 'asc' ? 'desc' : 'asc';
     const sorted = [...sortedData].sort((a, b) => {
       if (order === 'asc') {
